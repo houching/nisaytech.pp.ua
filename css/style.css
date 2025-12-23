@@ -14,6 +14,7 @@
     --header-height: 70px;
 
     /* Effects */
+    --glass-bg: rgba(10, 10, 10, 0.8);
     --glass-border: 1px solid rgba(255, 255, 255, 0.1);
     --card-hover-transform: translateY(-5px);
     --btn-secondary-bg: rgba(255, 255, 255, 0.1);
@@ -43,6 +44,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-main);
+    /* Fixes black text in dark mode */
 }
 
 .theme-btn:hover {
@@ -688,8 +691,8 @@ a {
     }
 
     .mobile-btn {
-        background: transparent;
-        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -699,6 +702,13 @@ a {
         justify-content: center;
         cursor: pointer;
         color: var(--text-main);
+        backdrop-filter: blur(5px);
+        transition: all 0.2s ease;
+    }
+
+    .mobile-btn:active {
+        transform: scale(0.95);
+        background: rgba(255, 255, 255, 0.2);
     }
 }
 
