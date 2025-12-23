@@ -211,30 +211,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Dynamic Team
+    // Dynamic Team with Persistent Photos
     const teamGrid = document.getElementById('team-grid');
     if (teamGrid) {
         const roles = ["Frontend Dev", "Backend Dev", "Fullstack", "DevOps", "UI/UX Designer", "Product Owner", "QA Engineer", "AI Researcher"];
-        const avatars = ["👺", "🤠", "👩‍💻", "👨‍💻", "🤖", "👽", "🦄", "🐉", "🧙‍♂️", "🧛‍♀️", "🧟", "🧞", "🧝", "🧚", "🧜‍♂️"];
         const firstNames = ["Sambath", "Bopha", "Vireak", "Sokha", "Dara", "Chea", "Nary", "Piseth", "Rithy", "Sophal", "Bona", "Chanthou", "Malis", "Vanna", "Srey"];
 
-        // Generate 15 random members
+        // Get saved seeds or generate new ones
+        let teamSeeds = JSON.parse(localStorage.getItem('team_member_seeds'));
+        if (!teamSeeds || teamSeeds.length !== 15) {
+            teamSeeds = [];
+            for (let i = 0; i < 15; i++) {
+                teamSeeds.push(Math.floor(Math.random() * 2000) + 1);
+            }
+            localStorage.setItem('team_member_seeds', JSON.stringify(teamSeeds));
+        }
+
+        // Generate 15 members
         for (let i = 0; i < 15; i++) {
             const member = {
-                name: firstNames[i], // Direct mapping for simplicity, or shuffle
-                role: roles[Math.floor(Math.random() * roles.length)],
-                avatar: avatars[i % avatars.length]
+                name: firstNames[i],
+                role: roles[Math.floor(Math.random() * roles.length)]
             };
+
+            const seed = teamSeeds[i];
+            // Using DiceBear API (Avataaars style) which matches getavataaars.com
+            const imageUrl = `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}`;
 
             const card = document.createElement('div');
             card.className = 'card team-card';
             card.innerHTML = `
-                <div class="team-avatar">${member.avatar}</div>
+                <div class="team-avatar" style="background-image: url('${imageUrl}'); background-size: contain; background-repeat: no-repeat; background-position: center; border: 2px solid var(--primary); background-color: rgba(255,255,255,0.1);"></div>
                 <h3>${member.name}</h3>
                 <p class="role">${member.role}</p>
             `;
             teamGrid.appendChild(card);
         }
+    }
+
+    // Persistent Random Portfolio Images
+    const portfolioImages = document.querySelectorAll('.project-img');
+    if (portfolioImages.length > 0) {
+        let seeds = JSON.parse(localStorage.getItem('portfolio_images_seeds'));
+
+        // If no seeds or wrong count, generate new ones
+        if (!seeds || seeds.length !== portfolioImages.length) {
+            seeds = [];
+            for (let i = 0; i < portfolioImages.length; i++) {
+                // Generate random integer 1-1000 for seed
+                seeds.push(Math.floor(Math.random() * 1000) + 1);
+            }
+            localStorage.setItem('portfolio_images_seeds', JSON.stringify(seeds));
+        }
+
+        portfolioImages.forEach((imgDiv, index) => {
+            // Using picsum seed to ensure stability across reloads
+            const seed = seeds[index];
+            imgDiv.style.backgroundImage = `url('https://picsum.photos/seed/${seed}/800/600')`;
+            imgDiv.style.backgroundSize = 'cover';
+            imgDiv.style.backgroundPosition = 'center';
+        });
     }
 
     // Cookie Helpers
