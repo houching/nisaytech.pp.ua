@@ -40,14 +40,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // Redirect Welcome Message
     const params = new URLSearchParams(window.location.search);
     const refParam = params.get('ref');
+    const originalUrlParam = params.get('original_url');
     const referrer = document.referrer;
 
     let source = null;
 
     if (refParam) {
         source = refParam; // e.g. ?ref=i9t5.com
-    } else if (referrer && referrer.includes('i9t5.com')) {
-        source = 'i9t5.com'; // Auto-detect
+    } else if (originalUrlParam) {
+        // e.g. ?original_url=i9t5.com/foo/bar
+        try {
+            let urlStr = decodeURIComponent(originalUrlParam);
+            if (!/^https?:\/\//i.test(urlStr)) {
+                urlStr = 'https://' + urlStr;
+            }
+            const url = new URL(urlStr);
+            source = url.hostname; // Extracts just 'i9t5.com'
+        } catch (e) {
+            source = originalUrlParam;
+        }
+    } else if (referrer) {
+        // Auto-detect ANY external referrer
+        try {
+            const refUrl = new URL(referrer);
+            if (refUrl.hostname !== window.location.hostname) {
+                source = refUrl.hostname;
+            }
+        } catch (e) {
+            console.log('Invalid referrer:', referrer);
+        }
     }
 
     if (source) {
@@ -57,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="toast-icon">👋</span>
             <div class="toast-content">
                 <p>Welcome visitor from <strong>${escapeHtml(source)}</strong>!</p>
-                <span class="toast-sub">We're glad you're here.</span>
+                <span class="toast-sub">If they don't want you. I'm right here 4U.</span>
             </div>
             <button class="toast-close">&times;</button>
         `;
