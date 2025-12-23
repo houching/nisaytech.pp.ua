@@ -1,0 +1,120 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const elementsToAnimate = document.querySelectorAll('.hero-title, .hero-subtitle, .hero-actions, .section-title, .section-desc, .card');
+
+    elementsToAnimate.forEach(el => {
+        el.classList.add('fade-in-section');
+        observer.observe(el);
+    });
+
+    // Contact Form Handler
+    const form = document.querySelector('.contact-form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            const subject = `New Inquiry from ${name}`;
+            const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
+
+            window.location.href = `mailto:hello@nisaytech.pp.ua?subject=${subject}&body=${body}`;
+        });
+    }
+
+    // Redirect Welcome Message
+    const params = new URLSearchParams(window.location.search);
+    const refParam = params.get('ref');
+    const referrer = document.referrer;
+
+    let source = null;
+
+    if (refParam) {
+        source = refParam; // e.g. ?ref=i9t5.com
+    } else if (referrer && referrer.includes('i9t5.com')) {
+        source = 'i9t5.com'; // Auto-detect
+    }
+
+    if (source) {
+        const toast = document.createElement('div');
+        toast.className = 'welcome-toast';
+        toast.innerHTML = `
+            <span class="toast-icon">👋</span>
+            <div class="toast-content">
+                <p>Welcome visitor from <strong>${escapeHtml(source)}</strong>!</p>
+                <span class="toast-sub">We're glad you're here.</span>
+            </div>
+            <button class="toast-close">&times;</button>
+        `;
+
+        document.body.appendChild(toast);
+
+        // Animate in
+        setTimeout(() => toast.classList.add('visible'), 500);
+
+        // Close handler
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 300);
+        });
+
+        // Auto dismiss
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                toast.classList.remove('visible');
+                setTimeout(() => toast.remove(), 300);
+            }
+        }, 8000);
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Cookie Banner
+    if (!localStorage.getItem('cookieConsent')) {
+        const banner = document.createElement('div');
+        banner.className = 'cookie-banner';
+        banner.innerHTML = `
+            <div class="cookie-content">
+                <p>We use cookies to improve your experience. By using our site, you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+            </div>
+            <div class="cookie-actions">
+                <button class="btn btn-secondary btn-sm" id="cookie-decline">Decline</button>
+                <button class="btn btn-primary btn-sm" id="cookie-accept">Accept</button>
+            </div>
+        `;
+        document.body.appendChild(banner);
+
+        setTimeout(() => banner.classList.add('visible'), 1000);
+
+        document.getElementById('cookie-accept').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            banner.classList.remove('visible');
+            setTimeout(() => banner.remove(), 300);
+        });
+
+        document.getElementById('cookie-decline').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            banner.classList.remove('visible');
+            setTimeout(() => banner.remove(), 300);
+        });
+    }
+});
