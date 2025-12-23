@@ -289,4 +289,240 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => banner.remove(), 300);
         });
     }
+    // Scroll to Top
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+    if (scrollToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Live Chat Simulation
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatBox = document.getElementById('chat-box');
+    const chatClose = document.getElementById('chat-close');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const chatMessages = document.getElementById('chat-messages');
+
+    if (chatToggle && chatBox) {
+        // Prepare bot
+        let hasWelcomed = false;
+
+        function addMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-msg ${sender}`;
+            msgDiv.textContent = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function toggleChat() {
+            chatBox.classList.toggle('open');
+            if (chatBox.classList.contains('open') && !hasWelcomed) {
+                hasWelcomed = true;
+                setTimeout(() => {
+                    addMessage("Suasdey! 👋 How can I help you today?", 'bot');
+                }, 500);
+            }
+        }
+
+        chatToggle.addEventListener('click', toggleChat);
+        chatClose.addEventListener('click', toggleChat);
+
+        function handleSend() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            chatInput.value = '';
+
+            // Simulate typing and reply
+            setTimeout(() => {
+                let reply = "Thanks for reaching out! Our team will get back to you shortly.";
+                if (/price|cost|quote/i.test(text)) {
+                    reply = "Our projects start from $500. Would you like to book a call?";
+                } else if (/hello|hi|hey/i.test(text)) {
+                    reply = "Hello there! ready to build something amazing?";
+                }
+                addMessage(reply, 'bot');
+            }, 1000);
+        }
+
+        chatSend.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+    }
+
+    // Booking Modal
+    const modal = document.getElementById('booking-modal');
+    const startProjectBtns = document.querySelectorAll('a[href="#contact"]'); // Hook into existing buttons
+    const closeModal = document.querySelector('.close-modal');
+    const timeSlots = document.querySelectorAll('.time-slots button');
+
+    if (modal) {
+        startProjectBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // If it's the specific "Start Project" button, prevent default and open modal
+                // Or we can just make a dedicated button. Let's hijack the hero one specifically if we want.
+                // For now, let's just create a new trigger or check class.
+                // Assuming user wants "Booking" functionality to be prominent.
+                if (btn.classList.contains('btn-lg') || btn.textContent.includes('Contact')) {
+                    // Optional: Only hijack specific buttons.
+                    // Let's just create a new function called openBooking() and attach it to relevant buttons logic?
+                    // Simpler: Just bind to the Hero Primary Button for now.
+                }
+            });
+        });
+
+        // Better approach: Let's assume we WANT to hijack "Start Project"
+        const heroBtn = document.querySelector('.hero-actions .btn-primary');
+        if (heroBtn) {
+            heroBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('show');
+            });
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+
+        // Loop time slots
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                timeSlots.forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+            });
+        });
+
+        // Handle form
+        const bookingForm = document.querySelector('.booking-form');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Booking Confirmed! Check your email.');
+                modal.classList.remove('show');
+            });
+        }
+    }
+
+    // i18n Support
+    const translations = {
+        en: {
+            "hero.title": "Future-Proof Software.",
+            "hero.subtitle": "Feature-rich, AI-native applications built for the Edge.",
+            "hero.cta": "Start Project 🚀",
+            "hero.explore": "Explore tech",
+            "section.sponsors": "Trusted by innovative companies",
+            "section.services": "Engineering Excellence",
+            "section.works": "Selected Works",
+            "section.works.desc": "Delivering impact across industries.",
+            "section.team": "Built by Locals",
+            "section.team.desc": "Proudly engineered in Cambodia 🇰🇭",
+            "contact.title": "Let's Talk",
+            "nav.partners": "Partners",
+            "nav.work": "Work",
+            "nav.tech": "Tech",
+            "nav.team": "Team",
+            "nav.contact": "Contact Us"
+        },
+        kh: {
+            "hero.title": "កម្មវិធីកុំព្យូទ័រ សម័យថ្មី។",
+            "hero.subtitle": "បង្កើតកម្មវិធី AI ដែលមានសមត្ថភាពខ្ពស់ និងល្បឿនលឿន។",
+            "hero.cta": "ចាប់ផ្តើមគម្រោង 🚀",
+            "hero.explore": "សិក្សាបច្ចេកវិទ្យា",
+            "section.sponsors": "ទុកចិត្តដោយក្រុមហ៊ុនច្នៃប្រឌិដ្ឋ",
+            "section.services": "ឧត្តមភាពវិស្វកម្ម",
+            "section.works": "ស្នាដៃសំខាន់ៗ",
+            "section.works.desc": "បង្កើតផលប៉ះពាល់វិជ្ជមានលើគ្រប់វិស័យ",
+            "section.team": "បង្កើតដោយស្នាដៃកូនខ្មែរ",
+            "section.team.desc": "មោទកភាពវិស្វកម្មក្នុងប្រទេសកម្ពុជា 🇰🇭",
+            "contact.title": "ទាក់ទងមកយើង",
+            "nav.partners": "ដៃគូ",
+            "nav.work": "ស្នាដៃ",
+            "nav.tech": "បច្ចេកវិទ្យា",
+            "nav.team": "ក្រុមការងារ",
+            "nav.contact": "ទាក់ទង"
+        }
+    };
+
+    const langToggle = document.getElementById('lang-toggle');
+    const langToggleMobile = document.getElementById('lang-toggle-mobile');
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function updateLanguage(lang) {
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang][key]) {
+                el.innerText = translations[lang][key];
+            }
+        });
+
+        if (langToggle) langToggle.textContent = lang === 'en' ? 'KH' : 'EN';
+        if (langToggleMobile) langToggleMobile.textContent = lang === 'en' ? 'KH' : 'EN';
+
+        // Change Font for Khmer
+        if (lang === 'kh') {
+            document.body.style.fontFamily = "'Kantumruy Pro', sans-serif";
+            document.documentElement.lang = 'km';
+        } else {
+            document.body.style.fontFamily = "'Inter', sans-serif";
+            document.documentElement.lang = 'en';
+        }
+
+        localStorage.setItem('lang', lang);
+    }
+
+    const switchLang = () => {
+        currentLang = currentLang === 'en' ? 'kh' : 'en';
+        updateLanguage(currentLang);
+    };
+
+    if (langToggle) langToggle.addEventListener('click', switchLang);
+    if (langToggleMobile) langToggleMobile.addEventListener('click', switchLang);
+
+    // Init
+    if (currentLang === 'kh') updateLanguage('kh');
+
+    // Mobile Theme Toggle logic was missing/incomplete previously
+    // We need to hook into the existing theme logic or add a new listener
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+    if (themeToggleMobile) {
+        // Sync initial state
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        themeToggleMobile.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+
+        themeToggleMobile.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Update BOTH buttons
+            if (themeToggle) themeToggle.textContent = newTheme === 'light' ? '☀️' : '🌙';
+            themeToggleMobile.textContent = newTheme === 'light' ? '☀️' : '🌙';
+        });
+    }
 });

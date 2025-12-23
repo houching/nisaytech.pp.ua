@@ -27,6 +27,8 @@
 	<meta property="twitter:image" content="https://nisaytech.pp.ua/assets/img/logo.png">
 
 	<title>Nisay Tech | Speed & Excellence</title>
+	<link rel="canonical" href="https://nisaytech.pp.ua/" />
+	<meta name="robots" content="index, follow">
 	<link rel="shortcut icon" type="image/png" href="assets/img/logo.png" />
 
 	<!-- Fonts -->
@@ -50,13 +52,20 @@
 			</a>
 			<nav>
 				<ul class="nav-links">
-					<li><a href="#sponsors">Partners</a></li>
-					<li><a href="#services">Tech</a></li>
-					<li><a href="#team">Team</a></li>
-					<li><a href="#contact" class="btn btn-primary">Contact Us</a></li>
+					<li><a href="#sponsors" data-i18n="nav.partners">Partners</a></li>
+					<li><a href="#portfolio" data-i18n="nav.work">Work</a></li>
+					<li><a href="#services" data-i18n="nav.tech">Tech</a></li>
+					<li><a href="#team" data-i18n="nav.team">Team</a></li>
+					<li><a href="#contact" class="btn btn-primary" data-i18n="nav.contact">Contact Us</a></li>
 					<li><button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">🌙</button></li>
+					<li><button id="lang-toggle" class="theme-btn"
+							style="font-size: 1rem; font-weight: bold;">KH</button></li>
 				</ul>
 			</nav>
+			<div class="mobile-nav-controls">
+				<button id="theme-toggle-mobile" class="theme-btn mobile-btn" aria-label="Toggle Theme">🌙</button>
+				<button id="lang-toggle-mobile" class="theme-btn mobile-btn" style="font-weight: bold;">KH</button>
+			</div>
 		</div>
 	</header>
 
@@ -64,18 +73,20 @@
 		<section class="hero">
 			<div class="hero-bg"></div>
 			<div class="container hero-content">
-				<h1 class="hero-title">Future-Proof <span class="text-gradient">Software</span>.</h1>
-				<p class="hero-subtitle">Feature-rich, AI-native applications built for the Edge.</p>
+				<h1 class="hero-title" data-i18n="hero.title">Future-Proof <span class="text-gradient">Software</span>.
+				</h1>
+				<p class="hero-subtitle" data-i18n="hero.subtitle">Feature-rich, AI-native applications built for the
+					Edge.</p>
 				<div class="hero-actions">
-					<a href="#contact" class="btn btn-primary btn-lg">Start Project 🚀</a>
-					<a href="#services" class="btn btn-secondary btn-lg">Explore tech</a>
+					<a href="#contact" class="btn btn-primary btn-lg" data-i18n="hero.cta">Start Project 🚀</a>
+					<a href="#services" class="btn btn-secondary btn-lg" data-i18n="hero.explore">Explore tech</a>
 				</div>
 			</div>
 		</section>
 
 		<section id="sponsors" class="section sponsors">
 			<div class="container">
-				<p class="section-desc">Trusted by innovative companies</p>
+				<p class="section-desc" data-i18n="section.sponsors">Trusted by innovative companies</p>
 				<div class="sponsors-grid" id="sponsors-grid">
 					<!-- Dynamic Content -->
 				</div>
@@ -87,37 +98,77 @@
 
 		<section id="services" class="section services">
 			<div class="container">
-				<h2 class="section-title">Engineering Excellence</h2>
+				<h2 class="section-title" data-i18n="section.services">Engineering Excellence</h2>
 				<div class="grid services-grid">
 					<div class="card service-card">
 						<div class="icon">🤖</div>
-						<h3>AI Native</h3>
-						<p>Smart agents and predictive models embedded at the core.</p>
+						<h3 data-i18n="service.ai.title">AI Native</h3>
+						<p data-i18n="service.ai.desc">Smart agents and predictive models embedded at the core.</p>
 					</div>
 					<div class="card service-card">
 						<div class="icon">🦀</div>
-						<h3>Rust & Wasm</h3>
-						<p>Near-native performance for heavy computational tasks.</p>
+						<h3 data-i18n="service.rust.title">Rust & Wasm</h3>
+						<p data-i18n="service.rust.desc">Near-native performance for heavy computational tasks.</p>
 					</div>
 					<div class="card service-card">
 						<div class="icon">🌍</div>
-						<h3>Edge First</h3>
-						<p>Global low-latency deployment with serverless architecture.</p>
+						<h3 data-i18n="service.edge.title">Edge First</h3>
+						<p data-i18n="service.edge.desc">Global low-latency deployment with serverless architecture.</p>
 					</div>
 					<div class="card service-card">
 						<div class="icon">⚡</div>
-						<h3>Instant UI</h3>
-						<p>Next-gen reactivity with Svelte & Qwik. Zero hydration lag.</p>
+						<h3 data-i18n="service.ui.title">Instant UI</h3>
+						<p data-i18n="service.ui.desc">Next-gen reactivity with Svelte & Qwik. Zero hydration lag.</p>
 					</div>
 					<div class="card service-card">
 						<div class="icon">🛡️</div>
-						<h3>Zero Trust</h3>
-						<p>Enterprise-grade security embedded at the protocol level.</p>
+						<h3 data-i18n="service.security.title">Zero Trust</h3>
+						<p data-i18n="service.security.desc">Enterprise-grade security embedded at the protocol level.
+						</p>
 					</div>
 					<div class="card service-card">
 						<div class="icon">📡</div>
-						<h3>IoT & Hardware</h3>
-						<p>Seamless communication between silicon and software.</p>
+						<h3 data-i18n="service.iot.title">IoT & Hardware</h3>
+						<p data-i18n="service.iot.desc">Seamless communication between silicon and software.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="portfolio" class="section portfolio">
+			<div class="container">
+				<h2 class="section-title" data-i18n="section.works">Selected Works</h2>
+				<p class="section-desc" data-i18n="section.works.desc">Delivering impact across industries.</p>
+				<div class="grid portfolio-grid">
+					<div class="card project-card">
+						<div class="project-img" style="background: linear-gradient(45deg, #ff00cc, #333399);"></div>
+						<div class="project-info">
+							<h3>BAB Mobile 2.0</h3>
+							<p data-i18n="project.1.desc">Next-gen banking experience for Cambodia's leading bank.</p>
+							<div class="tags">
+								<span>FinTech</span><span>Mobile</span>
+							</div>
+						</div>
+					</div>
+					<div class="card project-card">
+						<div class="project-img" style="background: linear-gradient(45deg, #11998e, #38ef7d);"></div>
+						<div class="project-info">
+							<h3>IndustSmart IoT</h3>
+							<p data-i18n="project.2.desc">Real-time crop monitoring system for smart farms.</p>
+							<div class="tags">
+								<span>IoT</span><span>Rust</span>
+							</div>
+						</div>
+					</div>
+					<div class="card project-card">
+						<div class="project-img" style="background: linear-gradient(45deg, #fc4a1a, #f7b733);"></div>
+						<div class="project-info">
+							<h3>CamGPT</h3>
+							<p data-i18n="project.3.desc">Fine-tuned LLM optimized for Khmer language processing.</p>
+							<div class="tags">
+								<span>AI</span><span>NLP</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -125,8 +176,8 @@
 
 		<section id="team" class="section team">
 			<div class="container">
-				<h2 class="section-title">Built by Locals</h2>
-				<p class="section-desc">Proudly engineered in Cambodia 🇰🇭</p>
+				<h2 class="section-title" data-i18n="section.team">Built by Locals</h2>
+				<p class="section-desc" data-i18n="section.team.desc">Proudly engineered in Cambodia 🇰🇭</p>
 				<div class="grid team-grid" id="team-grid">
 					<!-- Dynamic Content -->
 				</div>
@@ -135,21 +186,21 @@
 
 		<section id="contact" class="section contact">
 			<div class="container contact-container">
-				<h2 class="section-title">Let's Talk</h2>
+				<h2 class="section-title" data-i18n="contact.title">Let's Talk</h2>
 				<form class="contact-form">
 					<div class="form-group">
-						<label for="name">Name</label>
+						<label for="name" data-i18n="contact.name">Name</label>
 						<input type="text" id="name" placeholder="John Doe">
 					</div>
 					<div class="form-group">
-						<label for="email">Email</label>
+						<label for="email" data-i18n="contact.email">Email</label>
 						<input type="email" id="email" placeholder="john@example.com">
 					</div>
 					<div class="form-group">
-						<label for="message">Message</label>
+						<label for="message" data-i18n="contact.msg">Message</label>
 						<textarea id="message" rows="4" placeholder="Tell us about your project..."></textarea>
 					</div>
-					<button type="submit" class="btn btn-primary">Send Message</button>
+					<button type="submit" class="btn btn-primary" data-i18n="contact.send">Send Message</button>
 				</form>
 			</div>
 		</section>
@@ -168,23 +219,77 @@
 				<script type="text/javascript"
 					src="//www.highperformanceformat.com/b895ff3a187fbb92bf27a44e898827c7/invoke.js"></script>
 			</div>
+			</div>
 		</section>
+
+		<!-- Booking Modal -->
+		<div id="booking-modal" class="modal">
+			<div class="modal-content">
+				<span class="close-modal">&times;</span>
+				<h2 data-i18n="modal.title">Book a Discovery Call 📅</h2>
+				<p data-i18n="modal.desc">Let's discuss your project in detail. Choose a time that works for you.</p>
+				<!-- Mock Calendar UI -->
+				<div class="calendar-mock">
+					<div class="cal-header">October 2025</div>
+					<div class="cal-grid">
+						<span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+						<span class="mute">29</span><span class="mute">30</span><span
+							class="active">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+						<span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+						<!-- Simplified for visual only -->
+					</div>
+					<div class="time-slots">
+						<button>09:00 AM</button>
+						<button>02:00 PM</button>
+						<button>04:00 PM</button>
+					</div>
+				</div>
+				<form class="booking-form">
+					<input type="email" placeholder="Your Email" required>
+					<button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="modal.confirm">Confirm
+						Booking</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- Scroll to Top -->
+		<button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to Top">⬆️</button>
+
+		<!-- Live Chat Widget -->
+		<div class="chat-widget">
+			<button id="chat-toggle" class="chat-toggle" aria-label="Open Chat">💬</button>
+			<div class="chat-box" id="chat-box">
+				<div class="chat-header">
+					<h4 data-i18n="chat.title">Support</h4>
+					<button id="chat-close" class="chat-close">&times;</button>
+				</div>
+				<div class="chat-messages" id="chat-messages">
+					<!-- Messages go here -->
+				</div>
+				<div class="chat-input-area">
+					<input type="text" id="chat-input" placeholder="Type a message...">
+					<button id="chat-send">➤</button>
+				</div>
+			</div>
+		</div>
 	</main>
 
 	<footer id="contact" class="footer">
 		<div class="container footer-content">
 			<div class="footer-brand">
 				<h3>Nisay Tech</h3>
-				<p>Designing the future,</p>
+				<p data-i18n="footer.tagline">Designing the future,</p>
 				<div class="legal-links" style="margin-top: 10px; font-size: 0.8rem;">
-					<a href="privacy.html" style="color: var(--text-muted); margin-right: 10px;">Privacy</a>
-					<a href="terms.html" style="color: var(--text-muted);">Terms</a>
+					<a href="privacy.html" style="color: var(--text-muted); margin-right: 10px;"
+						data-i18n="footer.privacy">Privacy</a>
+					<a href="terms.html" style="color: var(--text-muted);" data-i18n="footer.terms">Terms</a>
 				</div>
 			</div>
 			<div class="footer-info">
-				<h4>Contact</h4>
-				<p>Phnom Penh, Cambodia</p>
+				<h4 data-i18n="contact.title">Contact</h4>
+				<p data-i18n="footer.location">Phnom Penh, Cambodia</p>
 			</div>
+			<!-- Mobile Controls Moved to Header -->
 		</div>
 		<div class="copyright">
 			&copy; 2025 Nisay Tech. All rights reserved.
