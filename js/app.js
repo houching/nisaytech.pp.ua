@@ -21,6 +21,38 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
+    // Hero Interactive Effect
+    const heroSection = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+
+    if (heroSection && heroContent) {
+        function updateHeroEffect(clientX, clientY) {
+            const { innerWidth, innerHeight } = window;
+            const x = (clientX / innerWidth - 0.5) * 2; // -1 to 1
+            const y = (clientY / innerHeight - 0.5) * 2; // -1 to 1
+
+            heroContent.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+            heroSection.style.setProperty('--mouse-x', `${clientX}px`);
+            heroSection.style.setProperty('--mouse-y', `${clientY}px`);
+        }
+
+        heroSection.addEventListener('mousemove', (e) => {
+            window.requestAnimationFrame(() => updateHeroEffect(e.clientX, e.clientY));
+        });
+
+        heroSection.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            window.requestAnimationFrame(() => updateHeroEffect(touch.clientX, touch.clientY));
+        });
+
+        const resetEffect = () => {
+            heroContent.style.transform = 'translate(0, 0)';
+        };
+
+        heroSection.addEventListener('mouseleave', resetEffect);
+        heroSection.addEventListener('touchend', resetEffect);
+    }
+
     // Contact Form Handler
     const form = document.querySelector('.contact-form');
     if (form) {
@@ -107,6 +139,80 @@ document.addEventListener('DOMContentLoaded', () => {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    // Dynamic Sponsors
+    const sponsorsGrid = document.getElementById('sponsors-grid');
+    const showMoreBtn = document.getElementById('show-more-sponsors');
+
+    if (sponsorsGrid && showMoreBtn) {
+        const brands = [
+            "NebulaSoft", "QuantCore", "PixelForge", "DataDynamo", "CloudScale", "DevSphere",
+            "LogicGate", "Synthetix", "Velocify", "CyberNodal", "InfiniTech", "MechMind",
+            "AeroSys", "BioLogic", "Cryptex", "DeepMindset", "EchoLabs", "FluxDrive",
+            "GeoLink", "HyperGrid", "IonWorks", "JuniperQA", "Kinetix", "LuminaAI",
+            "MetaFlow", "NeuroNet", "OptiCode", "PulseWave", "QubitSoft", "RapidScale",
+            "Solaris", "TerraByte", "UltraV", "VortexIO", "WarpSpeed", "XenonLab",
+            "YottaByte", "ZeroPoint", "AlphaWave", "BetaTest", "GammaRay", "DeltaForce",
+            "EpsilonDev", "ZetaCore", "EtaSystems", "ThetaCloud", "IotaLink", "KappaCode",
+            "LambdaSoft", "MuNet"
+        ];
+
+        let showingAll = false;
+
+        function renderSponsors(limit) {
+            sponsorsGrid.innerHTML = '';
+            const count = limit === -1 ? brands.length : limit;
+
+            brands.slice(0, count).forEach(brand => {
+                const el = document.createElement('div');
+                el.className = 'sponsor';
+                el.textContent = brand;
+                sponsorsGrid.appendChild(el);
+            });
+        }
+
+        renderSponsors(20);
+
+        showMoreBtn.addEventListener('click', () => {
+            if (!showingAll) {
+                renderSponsors(-1);
+                showMoreBtn.textContent = 'Show Less';
+                showingAll = true;
+            } else {
+                renderSponsors(20);
+                showMoreBtn.textContent = 'Show More';
+                showingAll = false;
+                // Scroll back to sponsors start
+                document.getElementById('sponsors').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // Dynamic Team
+    const teamGrid = document.getElementById('team-grid');
+    if (teamGrid) {
+        const roles = ["Frontend Dev", "Backend Dev", "Fullstack", "DevOps", "UI/UX Designer", "Product Owner", "QA Engineer", "AI Researcher"];
+        const avatars = ["👺", "🤠", "👩‍💻", "👨‍💻", "🤖", "👽", "🦄", "🐉", "🧙‍♂️", "🧛‍♀️", "🧟", "🧞", "🧝", "🧚", "🧜‍♂️"];
+        const firstNames = ["Sambath", "Bopha", "Vireak", "Sokha", "Dara", "Chea", "Nary", "Piseth", "Rithy", "Sophal", "Bona", "Chanthou", "Malis", "Vanna", "Srey"];
+
+        // Generate 15 random members
+        for (let i = 0; i < 15; i++) {
+            const member = {
+                name: firstNames[i], // Direct mapping for simplicity, or shuffle
+                role: roles[Math.floor(Math.random() * roles.length)],
+                avatar: avatars[i % avatars.length]
+            };
+
+            const card = document.createElement('div');
+            card.className = 'card team-card';
+            card.innerHTML = `
+                <div class="team-avatar">${member.avatar}</div>
+                <h3>${member.name}</h3>
+                <p class="role">${member.role}</p>
+            `;
+            teamGrid.appendChild(card);
+        }
     }
 
     // Cookie Helpers
