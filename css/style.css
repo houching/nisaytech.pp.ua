@@ -222,6 +222,29 @@ a {
 
 /* Rotate animation removed for performance/style clash with spotlight */
 
+
+.hero-logo {
+    width: 360px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
 .hero-title {
     font-size: 4rem;
     line-height: 1.1;
@@ -642,6 +665,10 @@ a {
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
+    }
+
+    .hero-logo {
+        width: 180px;
     }
 
     .nav-links {
