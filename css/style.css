@@ -14,9 +14,40 @@
     --header-height: 70px;
 
     /* Effects */
-    --glass-bg: rgba(10, 10, 10, 0.7);
     --glass-border: 1px solid rgba(255, 255, 255, 0.1);
     --card-hover-transform: translateY(-5px);
+    --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+    --btn-secondary-hover: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] {
+    --bg-dark: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: 1px solid rgba(0, 0, 0, 0.1);
+    --primary-glow: rgba(59, 130, 246, 0.2);
+    --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+    --btn-secondary-hover: rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-btn:hover {
+    background: rgba(128, 128, 128, 0.1);
+    transform: rotate(15deg);
 }
 
 * {
@@ -87,13 +118,13 @@ a {
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--btn-secondary-bg);
+    color: var(--text-main);
     backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--btn-secondary-hover);
 }
 
 .grid {
